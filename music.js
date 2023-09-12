@@ -1,9 +1,7 @@
+let inputMusic = document.getElementById('input-music')
+
 const apiMusic = axios.create({
     baseURL: 'https://spotify23.p.rapidapi.com',
-    params:{
-        ids: '5rZuC67lXA5SI6f4n61gEw',
-        limit: '4'
-    },
     headers:{
         'Content-Type': 'application/json',
         'X-RapidAPI-Key': '6c1967e5d3msh3257be7d6cac589p1ff725jsnbccdc806cd80',
@@ -11,8 +9,34 @@ const apiMusic = axios.create({
     }
 })
 
+let inputSearchMusic = document.getElementById('input-search-music')
+let inputSearchType = document.getElementById('input-search-type')
+
+async function searchMusic(){
+    const {data,status} = await apiMusic.get(`/search/?q=${inputSearchMusic.value}&type=${inputSearchType.value}`)
+    const sectionSearchMusic = document.getElementById('section-search')
+    let listTracks = document.createElement('p')
+    let playTracks = document.createElement('a')
+    let playTracksText = document.createTextNode('Track')
+    sectionSearchMusic.appendChild(listTracks)
+    sectionSearchMusic.appendChild(playTracks)
+    playTracks.appendChild(playTracksText)
+
+    if(status == 200){
+        data.tracks.items.flatMap(item =>{
+            listTracks.innerHTML = `<li>${item.data.name}</li>`
+        })
+        data.tracks.items.flatMap(item =>{
+            playTracks.href = item.data.uri
+        })
+        console.log(data.tracks.items)   
+    } else{
+        alert('Falla')
+    }
+}
+
 async function petitionAlbum(){
-    const {data,status} = await apiMusic.get('/albums/')
+    const {data,status} = await apiMusic.get('/albums/?ids=3IBcauSj5M2A6lTeffJzdv')
     const sectionAlbum = document.getElementById('section-album')
     const imgAlbum = document.createElement('img')
     let pAlbum = document.createElement('p')
