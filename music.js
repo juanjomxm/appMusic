@@ -1,7 +1,7 @@
-let inputMusic = document.getElementById('input-music')
+// API SPOTIFY
 
 const apiMusic = axios.create({
-    baseURL: 'https://spotify23.p.rapidapi.com',
+    baseURL: 'https://spotify117.p.rapidapi.com',
     headers:{
         'Content-Type': 'application/json',
         'X-RapidAPI-Key': '6c1967e5d3msh3257be7d6cac589p1ff725jsnbccdc806cd80',
@@ -9,31 +9,7 @@ const apiMusic = axios.create({
     }
 })
 
-let inputSearchMusic = document.getElementById('input-search-music')
-let inputSearchType = document.getElementById('input-search-type')
-
-async function searchMusic(){
-    const {data,status} = await apiMusic.get(`/search/?q=${inputSearchMusic.value}&type=${inputSearchType.value}`)
-    const sectionSearchMusic = document.getElementById('section-search')
-    let listTracks = document.createElement('p')
-    let playTracks = document.createElement('a')
-    let playTracksText = document.createTextNode('Track')
-    sectionSearchMusic.appendChild(listTracks)
-    sectionSearchMusic.appendChild(playTracks)
-    playTracks.appendChild(playTracksText)
-
-    if(status == 200){
-        data.tracks.items.flatMap(item =>{
-            listTracks.innerHTML = `<li>${item.data.name}</li>`
-        })
-        data.tracks.items.flatMap(item =>{
-            playTracks.href = item.data.uri
-        })
-        console.log(data.tracks.items)   
-    } else{
-        alert('Falla')
-    }
-}
+let inputMusic = document.getElementById('input-music')
 
 async function petitionAlbum(){
     const {data,status} = await apiMusic.get('/albums/?ids=3IBcauSj5M2A6lTeffJzdv')
@@ -62,5 +38,48 @@ async function petitionAlbum(){
         data.albums.map(item => {
             playTrack.href = item.external_urls.spotify
         })
+    }
+}
+
+// API MUSIC FREE
+
+const apiMusicFree = axios.create({
+    baseURL: 'https://deezerdevs-deezer.p.rapidapi.com',
+    headers: {
+        'X-RapidAPI-Key': '6c1967e5d3msh3257be7d6cac589p1ff725jsnbccdc806cd80',
+        'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+    }
+})
+
+async function infoApiMusic(){
+    const {data,status} = await apiMusicFree.get('/infos')
+    if(status == 200){
+        console.log(data)
+    }
+}
+
+// Vamos bien, debo encontrar la solucion para cuando le de click a search aparezca un boton con la opcion de darle play y sepa de inmediato que cancion es, por medio del id
+
+let inputMusicFree = document.getElementById('input-music-free')
+async function searchMusicFree(){
+    const {data,status} = await apiMusicFree.get(`/search?q=emienm`)//${inputMusicFree.value}
+    const sectionMusicFree = document.getElementById('section-music-free')
+    const listTracks = document.createElement('p')
+    sectionMusicFree.appendChild(listTracks)
+
+    if(status == 200){
+        
+        listTracks.innerHTML = data.data.map(item => `<li>${item.title}</li>`)
+        console.log(data.data.map(item => `${item.title} ${item.id}`))
+    }
+}
+
+async function trackMusicFree(){
+    const{data,status} = await apiMusicFree.get(`/track/1579904`)
+
+    if(status == 200){
+        console.log(data)
+    }else{
+        alert('FALLA')
     }
 }

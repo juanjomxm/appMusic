@@ -7,17 +7,17 @@
 </head>
 <body>
 
-    <section id="section-search">
-        <h2>Buscar</h2>
-        <input placeholder="name" id="input-search-music">
-        <input placeholder="type" id="input-search-type">
-        <button onclick="searchMusic()">Buscar</button>
-    </section>
-
     <section id="section-album">
-        <h1>Albums</h1>
+        <h2>Albums</h2>
         <input id="input-music">
         <button onclick="petitionAlbum()">Buscar</button>
+    </section>
+
+    <section id="section-music-free">
+        <h2>MUSICA GRATIS</h2>
+        <input id="input-music-free"/>
+        <button onclick="searchMusicFree()">BUSCAR</button>
+        <button onclick="trackMusicFree()">TRACKS</button>
     </section>
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
