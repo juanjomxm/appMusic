@@ -1,4 +1,26 @@
-h1{
+h2{
     display:flex;
     justify-content: center;
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+article{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a{
+    background-color: green;
+    width: 50px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: white;
 }
